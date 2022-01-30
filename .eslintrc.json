@@ -13,6 +13,7 @@
     "quotes": ["error", "single"],
     "no-undef": "off",
     "no-trailing-spaces": "warn",
-    "indent": "warn"
+    "indent": "warn",
+    "class-methods-use-this": "off"
   }
 }
