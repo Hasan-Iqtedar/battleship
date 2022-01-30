@@ -1,0 +1,28 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hasan-Iqtedar/battleship.git"
+  },
+  "author": "Hasan Iqtedar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hasan-Iqtedar/battleship/issues"
+  },
+  "homepage": "https://github.com/Hasan-Iqtedar/battleship#readme",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "jest": "^27.4.7",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
