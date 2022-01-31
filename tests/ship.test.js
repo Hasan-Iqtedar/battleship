@@ -12,27 +12,33 @@ test('Each ship has a type and length upon creation', () => {
 });
 
 test('hit method returns false when ship coordinates have not been set up yet', () => {
-  expect(ship.hit(5)).toBe(false);
+  expect(ship.hit({ x: 3, y: 2 })).toBe(false);
+});
+
+test('hit method expects to receive a coordinate with x and y values', () => {
+  expect.assertions(1);
+  try {
+    ship.hit(4);
+  } catch (e) {
+    expect(e).toBeInstanceOf(TypeError);
+  }
 });
 
 test('hit method returns true when there is a hit', () => {
-  ship.coordinates.push(1, 2, 3);
-  expect(ship.hit(2)).toBe(true);
+  ship.coordinates.push({ x: 1, y: 1 }, { x: 1, y: 2 });
+  expect(ship.hit({ x: 1, y: 1 })).toBe(true);
 });
 
 test('hit method updates hitCoordinates', () => {
-  ship.hit(2);
-  expect(ship.hitCoordinates).toEqual([2]);
+  ship.hit({ x: 1, y: 1 });
+  expect(ship.hitCoordinates).toEqual([{ x: 1, y: 1 }]);
 });
 
 test('isSunk method when all coordinates have not been hit', () => {
-  ship.hit(2);
   expect(ship.isSunk()).toBe(false);
 });
 
 test('isSunk method when all coordinates have been hit', () => {
-  ship.hit(1);
-  ship.hit(2);
-  ship.hit(3);
+  ship.hit({ x: 1, y: 2 });
   expect(ship.isSunk()).toBe(true);
 });
