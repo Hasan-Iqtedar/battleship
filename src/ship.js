@@ -7,10 +7,6 @@ class Ship {
   }
 
   hit(coordinate) {
-    if (!(coordinate.x && coordinate.y)) {
-      throw new TypeError('Bad input');
-    }
-
     const indexAlreadyHit = this.hitCoordinates.findIndex((element) => {
       if (element.x === coordinate.x && element.y === coordinate.y) {
         return true;
@@ -21,19 +17,7 @@ class Ship {
     if (indexAlreadyHit !== -1) {
       return false;
     }
-
-    const index = this.coordinates.findIndex((element) => {
-      if (element.x === coordinate.x && element.y === coordinate.y) {
-        return true;
-      }
-      return false;
-    });
-
-    if (index !== -1) {
-      this.hitCoordinates.push(coordinate);
-      return true;
-    }
-    return false;
+    this.hitCoordinates.push(coordinate);
   }
 
   isSunk() {
@@ -41,18 +25,11 @@ class Ship {
       return false;
     }
 
-    let status = true;
-    this.coordinates.forEach((element) => {
-      if (this.hitCoordinates.findIndex((value) => {
-        if (value.x === element.x && value.y === element.y) {
-          return true;
-        }
-        return false;
-      }) === -1) {
-        status = false;
-      }
-    });
-    return status;
+    if (this.coordinates.length === this.hitCoordinates.length) {
+      return true;
+    }
+
+    return false;
   }
 }
 
