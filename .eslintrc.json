@@ -14,6 +14,10 @@
     "no-undef": "off",
     "no-trailing-spaces": "warn",
     "indent": "warn",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "no-unused-vars": "warn",
+    "consistent-return": "warn",
+    "prefer-const": "warn",
+    "no-plusplus": "warn"
   }
 }

@@ -1,6 +1,6 @@
 import Ship from './ship';
 
-const GameBoard = () => {
+const GameBoard = (rows = 10, columns = 10) => {
   const ships = [];
   const missedCoordinates = [];
 
@@ -17,7 +17,7 @@ const GameBoard = () => {
   };
 
   const receiveAttack = (coordinate) => {
-    if (!(coordinate.x && coordinate.y)) {
+    if ((coordinate.x !== 0 && coordinate.y !== 0) && !(coordinate.x && coordinate.y)) {
       throw new TypeError('Bad input invalid coordinate');
     }
 
@@ -38,6 +38,7 @@ const GameBoard = () => {
       return false;
     });
 
+    // console.log(`Ship: ${shipIndex}, Coordinate Index: ${coordinateIndex}`);
     if (shipIndex !== -1) {
       console.log(`Ship: ${shipIndex}, Coordinate Index: ${coordinateIndex}`);
       return true;
@@ -48,7 +49,9 @@ const GameBoard = () => {
 
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());
 
-  return { placeShip, receiveAttack, allShipsSunk };
+  return {
+    rows, columns, placeShip, receiveAttack, allShipsSunk,
+  };
 };
 
 export default GameBoard;
