@@ -36,10 +36,32 @@ body {
     border: 1px solid blue;
 }
 
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 65%;
+    width: 30%;
+}
+
 .cell {
     border: 1px solid gray;
 }
 
 .cell:hover {
     background-color: rgb(216, 211, 211);
+}
+
+.ship-placement-cell {
+    background-color: lightblue;
+}
+
+.ship-placement-cell-invalid {
+    cursor: not-allowed;
+}
+
+.rotate-btn {
+    width: 25%;
+    height: 10%;
+    font-size: large;
 }
