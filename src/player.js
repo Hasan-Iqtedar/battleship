@@ -1,10 +1,10 @@
 const Player = (isComputer = false) => {
-  let turn = false;
+  // let turn = false;
 
-  const getTurn = () => turn;
-  const setTurn = (newTurn) => {
-    turn = newTurn;
-  };
+  // const getTurn = () => turn;
+  // const setTurn = (newTurn) => {
+  //   turn = newTurn;
+  // };
 
   if (isComputer) {
     const guessRandomCoordinate = (rows, columns) => ({
@@ -22,10 +22,8 @@ const Player = (isComputer = false) => {
     //   }
     // };
 
-    return { getTurn, setTurn, guessRandomCoordinate };
+    return { guessRandomCoordinate };
   }
-
-  return { getTurn, setTurn };
 };
 
 export default Player;

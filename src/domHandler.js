@@ -1,7 +1,8 @@
 import GameModule from './game';
 
 const DomHandler = (() => {
-  const playerBoardGrid = document.querySelector('#player-board');
+  let playerBoardGrid = null;
+  const main = document.querySelector('.game-board-container');
 
   const updateComputerBoard = (e, computerBoard) => {
     const coordinate = {
@@ -59,6 +60,17 @@ const DomHandler = (() => {
     computerBoard,
     computerPlayer,
   ) => {
+    const gameBoard1 = document.createElement('div');
+    const gameBoard2 = document.createElement('div');
+    console.log(playerShips);
+    gameBoard1.classList.add('game-board');
+    gameBoard2.classList.add('game-board');
+
+    gameBoard1.id = 'player-board';
+
+    main.append(gameBoard1, gameBoard2);
+    playerBoardGrid = document.querySelector('#player-board');
+
     const gameboards = document.getElementsByClassName('game-board');
     gameboards[0].style.cssText = `grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${columns}, 1fr)`;
     gameboards[1].style.cssText = `grid-template-rows: repeat(${rows}, 1fr); grid-template-columns: repeat(${columns}, 1fr)`;
@@ -94,10 +106,12 @@ const DomHandler = (() => {
         cell2.addEventListener('click', handler);
         cell2.addEventListener('click', endGame);
 
-        playerShips.forEach((element) => {
-          if (element.x === i && element.y === j) {
-            cell1.style.cssText = 'background-color: black';
-          }
+        playerShips.forEach((ship) => {
+          ship.coordinates.forEach((element) => {
+            if (element.x === i && element.y === j) {
+              cell1.style.cssText = 'background-color: black';
+            }
+          });
         });
 
         gameboards[0].appendChild(cell1);
@@ -105,12 +119,8 @@ const DomHandler = (() => {
       }
     }
   };
-
-  const renderContent = () => {};
-
   return {
     initialize,
-    renderContent,
   };
 })();
 

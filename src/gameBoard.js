@@ -4,6 +4,8 @@ const GameBoard = (rows = 10, columns = 10) => {
   const ships = [];
   const missedCoordinates = [];
 
+  const getPlayerShips = () => ships;
+
   const placeShip = (type, length, coordinates) => {
     if (Object.keys(coordinates).length !== length) {
       throw new TypeError('Length and num of coordinates mismatch');
@@ -17,7 +19,11 @@ const GameBoard = (rows = 10, columns = 10) => {
   };
 
   const receiveAttack = (coordinate) => {
-    if ((coordinate.x !== 0 && coordinate.y !== 0) && !(coordinate.x && coordinate.y)) {
+    if (
+      coordinate.x !== 0
+      && coordinate.y !== 0
+      && !(coordinate.x && coordinate.y)
+    ) {
       throw new TypeError('Bad input invalid coordinate');
     }
 
@@ -50,7 +56,12 @@ const GameBoard = (rows = 10, columns = 10) => {
   const allShipsSunk = () => ships.every((ship) => ship.isSunk());
 
   return {
-    rows, columns, placeShip, receiveAttack, allShipsSunk,
+    rows,
+    columns,
+    placeShip,
+    receiveAttack,
+    allShipsSunk,
+    getPlayerShips,
   };
 };
 
