@@ -2,13 +2,17 @@ import DomHandler from './domHandler';
 
 const ShipPlacementHandler = (() => {
   let orientation = 'horizontal';
-  let length = 3;
-  const name = 'submarine';
+
   const maxShips = 4;
   let status = false;
   let numShips = 0;
 
+  const shipNames = ['submarine', 'battleship', 'fighter', 'carrier'];
+  const shipLengths = [4, 3, 2, 3];
   const main = document.querySelector('.game-board-container');
+
+  let length = shipLengths[0];
+  let name = shipNames[0];
 
   const getOrientation = () => orientation;
   const getLength = () => length;
@@ -22,6 +26,10 @@ const ShipPlacementHandler = (() => {
 
   const setLength = (newLength) => {
     length = newLength;
+  };
+
+  const setName = (newName) => {
+    name = newName;
   };
 
   const setStatus = (newStatus) => {
@@ -46,7 +54,11 @@ const ShipPlacementHandler = (() => {
       let cell = e.target;
       const colIndex = cell.getAttribute('data-col');
 
-      if (getOrientation() === 'horizontal') {
+      // console.log(cell.classList);
+
+      if (cell.classList.contains('occupied-cell')) {
+        cell.classList.add('ship-placement-cell-invalid');
+      } else if (getOrientation() === 'horizontal') {
         if (colIndex <= columns - getLength()) {
           for (let i = 0; i < getLength(); i++) {
             cell.classList.add('ship-placement-cell');
@@ -116,11 +128,22 @@ const ShipPlacementHandler = (() => {
           y: parseInt(cell.getAttribute('data-col'), 10),
         };
         coordinates.push(coordinate);
-        cell.style.cssText = 'background-color: rgba(0,0,0,0.7)';
+        cell.classList.add('occupied-cell');
+        cell.classList.remove('ship-placement-cell');
       });
-      playerBoard.placeShip('submarine', 3, coordinates);
 
-      setNumShips(getNumShips() + 1);
+      if (coordinates.length > 0) {
+        playerBoard.placeShip(getName(), getLength(), coordinates);
+
+        setNumShips(getNumShips() + 1);
+        setName(shipNames[getNumShips()]);
+        setLength(shipLengths[getNumShips()]);
+
+        // console.log(getLength());
+
+        const line = document.querySelector('#input-line');
+        line.textContent = `Place your ${getName()}`;
+      }
 
       if (getNumShips() === maxShips) {
         setStatus(true);
@@ -144,6 +167,7 @@ const ShipPlacementHandler = (() => {
       for (let j = 0; j < columns; j++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
+
         cell.setAttribute('data-row', `${i}`);
         cell.setAttribute('data-col', `${j}`);
 
@@ -171,10 +195,12 @@ const ShipPlacementHandler = (() => {
     const btn = document.createElement('button');
     const line = document.createElement('h2');
 
+    line.id = 'input-line';
+
     btn.classList.add('rotate-btn');
     btn.addEventListener('click', toggleOrinetation);
 
-    line.textContent = `Place your ${getName()}`;
+    line.textContent = 'Place your Submarine';
     btn.textContent = 'Rotate';
 
     container.append(line, btn);
