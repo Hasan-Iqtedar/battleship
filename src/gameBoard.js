@@ -4,6 +4,9 @@ const GameBoard = (rows = 10, columns = 10) => {
   const ships = [];
   const missedCoordinates = [];
 
+  const occupiedRows = [];
+  const occupiedColumns = [];
+
   const getPlayerShips = () => ships;
 
   const placeShip = (type, length, coordinates) => {
@@ -15,6 +18,10 @@ const GameBoard = (rows = 10, columns = 10) => {
     ship.coordinates.push(...coordinates);
     ships.push(ship);
 
+    coordinates.forEach((element) => {
+      occupiedRows.push(element.x);
+      occupiedColumns.push(element.y);
+    });
     return ship;
   };
 
@@ -44,9 +51,7 @@ const GameBoard = (rows = 10, columns = 10) => {
       return false;
     });
 
-    // console.log(`Ship: ${shipIndex}, Coordinate Index: ${coordinateIndex}`);
     if (shipIndex !== -1) {
-      console.log(`Ship: ${shipIndex}, Coordinate Index: ${coordinateIndex}`);
       return true;
     }
     missedCoordinates.push(coordinate);

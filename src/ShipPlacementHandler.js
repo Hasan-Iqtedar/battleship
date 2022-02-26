@@ -46,7 +46,42 @@ const ShipPlacementHandler = (() => {
     } else {
       setOrinetation('horizontal');
     }
-    console.log(getOrientation());
+  };
+
+  const areCellsOccupied = (cell) => {
+    let occupied = false;
+
+    if (getOrientation() === 'horizontal') {
+      for (let i = 0; i < getLength(); i++) {
+        if (cell.classList.contains('occupied-cell')) {
+          occupied = true;
+          break;
+        } else {
+          cell = cell.nextSibling;
+        }
+      }
+    } else {
+      const colIndex = cell.getAttribute('data-col');
+      let rowIndex = cell.getAttribute('data-row');
+      let row = document.querySelectorAll(`[data-row='${parseInt(rowIndex, 10) + 1}']`);
+
+      for (let i = 0; i < getLength(); i++) {
+        if (cell.classList.contains('occupied-cell')) {
+          occupied = true;
+          break;
+        } else {
+          row.forEach((element) => {
+            if (element.getAttribute('data-col') == colIndex) {
+              cell = element;
+            }
+          });
+          rowIndex++;
+          row = document.querySelectorAll(`[data-row='${parseInt(rowIndex, 10) + 1}']`);
+        }
+      }
+    }
+
+    return occupied;
   };
 
   const renderCells = (board, rows, columns, playerBoard, computerBoard, computerPlayer) => {
@@ -54,9 +89,7 @@ const ShipPlacementHandler = (() => {
       let cell = e.target;
       const colIndex = cell.getAttribute('data-col');
 
-      // console.log(cell.classList);
-
-      if (cell.classList.contains('occupied-cell')) {
+      if (areCellsOccupied(cell)) {
         cell.classList.add('ship-placement-cell-invalid');
       } else if (getOrientation() === 'horizontal') {
         if (colIndex <= columns - getLength()) {
@@ -138,8 +171,6 @@ const ShipPlacementHandler = (() => {
         setNumShips(getNumShips() + 1);
         setName(shipNames[getNumShips()]);
         setLength(shipLengths[getNumShips()]);
-
-        // console.log(getLength());
 
         const line = document.querySelector('#input-line');
         line.textContent = `Place your ${getName()}`;

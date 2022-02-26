@@ -16,7 +16,6 @@ const DomHandler = (() => {
       e.target.style.cssText = 'background-color: rgb(230, 230, 112)';
     }
     if (computerBoard.allShipsSunk()) {
-      console.log('done');
       GameModule.setRunning(false);
     }
   };
@@ -49,7 +48,6 @@ const DomHandler = (() => {
     }
 
     if (playerBoard.allShipsSunk()) {
-      console.log('done');
       GameModule.setRunning(false);
     }
   };
@@ -64,7 +62,6 @@ const DomHandler = (() => {
   ) => {
     const gameBoard1 = document.createElement('div');
     const gameBoard2 = document.createElement('div');
-    console.log(playerShips);
     gameBoard1.classList.add('game-board');
     gameBoard2.classList.add('game-board');
 
@@ -89,6 +86,9 @@ const DomHandler = (() => {
           cell.removeEventListener('click', handler);
           cell.removeEventListener('click', endGame);
         });
+
+        const endingLine = document.querySelector('h3');
+        endingLine.textContent = 'The End';
       }
     };
 
@@ -107,6 +107,14 @@ const DomHandler = (() => {
 
         cell2.addEventListener('click', handler);
         cell2.addEventListener('click', endGame);
+
+        computerBoard.getPlayerShips().forEach((ship) => {
+          ship.coordinates.forEach((element) => {
+            if (element.x === i && element.y === j) {
+              cell2.style.cssText = 'background-color: blue';
+            }
+          });
+        });
 
         playerShips.forEach((ship) => {
           ship.coordinates.forEach((element) => {
