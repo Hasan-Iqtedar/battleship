@@ -60,8 +60,12 @@ const DomHandler = (() => {
     computerBoard,
     computerPlayer,
   ) => {
+    const headline = document.querySelector('p');
     const gameBoard1 = document.createElement('div');
     const gameBoard2 = document.createElement('div');
+
+    headline.textContent = 'Click on the enemy board to attack';
+
     gameBoard1.classList.add('game-board');
     gameBoard2.classList.add('game-board');
 
@@ -81,14 +85,12 @@ const DomHandler = (() => {
 
     const endGame = () => {
       if (GameModule.isRunning() === false) {
-        console.log('Hello ending....');
         gameboards[1].childNodes.forEach((cell) => {
           cell.removeEventListener('click', handler);
           cell.removeEventListener('click', endGame);
         });
 
-        const endingLine = document.querySelector('h3');
-        endingLine.textContent = 'The End';
+        headline.textContent = 'The End';
       }
     };
 
@@ -107,14 +109,6 @@ const DomHandler = (() => {
 
         cell2.addEventListener('click', handler);
         cell2.addEventListener('click', endGame);
-
-        computerBoard.getPlayerShips().forEach((ship) => {
-          ship.coordinates.forEach((element) => {
-            if (element.x === i && element.y === j) {
-              cell2.style.cssText = 'background-color: blue';
-            }
-          });
-        });
 
         playerShips.forEach((ship) => {
           ship.coordinates.forEach((element) => {
