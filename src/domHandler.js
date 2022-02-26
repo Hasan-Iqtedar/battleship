@@ -12,6 +12,8 @@ const DomHandler = (() => {
 
     if (computerBoard.receiveAttack(coordinate) === true) {
       e.target.style.cssText = 'background-color: maroon';
+    } else {
+      e.target.style.cssText = 'background-color: rgb(230, 230, 112)';
     }
     if (computerBoard.allShipsSunk()) {
       console.log('done');
